@@ -102,5 +102,22 @@ module device (
 		.io_wren(lpc_io_wren),
 		.postcode(postcode)
 	);
+	LPC_COM LPC_COM0(
+		.lclk(LPC_CLK),					// Clock 33MHz
+		.lreset_n(LPC_RSTn),				// Reset - Active Low (Same as PCI Reset)
+//		.lpc_en(lpc_en),				// 后端总线使能信号,高电平时总线有效
+		.device_cs(addr_hit && (lpc_addr >= `LPC_COM0_ADD) && (lpc_addr <= `LPC_COM0_ADD+7)),
+		.addr(lpc_addr - `LPC_COM0_ADD),			// 地址
+		.din(lpc_dout),
+		.dout(lpc_din),
+		.io_rden(lpc_io_rden),
+		.io_wren(lpc_io_wren),
+//		.com_irq(com0_irq),
+//
+//		.clk_24mhz(clk_24mhz),			// 24MHz时钟输入
+		.tx(UART_TX),
+		.rx(UART_RX)
+//		.baud_clk()			// 波特率时钟输出
+	);
 
 endmodule

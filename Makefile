@@ -4,7 +4,7 @@ PROJECT_FILE=device.qsf
 
 TESTBENCH=$(wildcard *tb.v)
 
-SOURCES = LPC_Peri.v device.v lpc_postcode.v
+SOURCES = LPC_Peri.v device.v lpc_postcode.v lpc_com.v
 
 PATH:=$(PATH):/c/altera/13.1/quartus/bin64
 
