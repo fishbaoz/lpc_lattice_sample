@@ -1,0 +1,67 @@
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+# Date created = 21:37:20  April 23, 2017
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		device_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus Prime software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "MAX II"
+set_global_assignment -name DEVICE EPM240T100C5
+set_global_assignment -name TOP_LEVEL_ENTITY device
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 16.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "21:37:20  APRIL 23, 2017"
+set_global_assignment -name LAST_QUARTUS_VERSION "16.1.0 Lite Edition"
+set_global_assignment -name SEARCH_PATH "f:\\i2c_altera/"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name DEVICE_FILTER_PACKAGE TQFP
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 100
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 5
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR "-1"
+set_global_assignment -name POWER_EXT_SUPPLY_VOLTAGE_TO_REGULATOR 3.3V
+set_global_assignment -name VERILOG_FILE device.v
+set_global_assignment -name VERILOG_FILE uart_tx.v
+set_global_assignment -name VERILOG_FILE uart_rx.v
+set_global_assignment -name VERILOG_FILE lpc.v
+set_global_assignment -name AUTO_RESTART_CONFIGURATION OFF
+set_global_assignment -name ENABLE_DEVICE_WIDE_RESET ON
+set_global_assignment -name ENABLE_OCT_DONE OFF
+set_global_assignment -name ENABLE_CONFIGURATION_PINS OFF
+set_global_assignment -name ENABLE_BOOT_SEL_PIN OFF
+set_global_assignment -name STRATIXV_CONFIGURATION_SCHEME "PASSIVE SERIAL"
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
+set_global_assignment -name CDF_FILE device.cdf
+set_location_assignment PIN_81 -to LPC_D3 # P4 pin5 -> pin7 (20)
+set_location_assignment PIN_82 -to LPC_D2 # P4 pin6 -> pin8 (20)
+set_location_assignment PIN_62 -to LPC_D1 # P1 pin12 -> pin10 (20)
+set_location_assignment PIN_64 -to LPC_D0 # P1 pin14 -> pin11 (20)
+set_location_assignment PIN_42 -to LPC_RST # P3 pin16 -> pin5 (20)
+set_location_assignment PIN_43 -to LPC_CLK # P3 pin17 -> pin1 (20)
+#set_location_assignment PIN_12 -to LPC_CLK # use 50MHz as test
+set_location_assignment PIN_33 -to LPC_FRAME # P3 pin7 -> pin3 (20)
+set_location_assignment PIN_78 -to UART_TX
+set_location_assignment PIN_77 -to UART_RX
+set_location_assignment PIN_21 -to LED_0 
+set_location_assignment PIN_20 -to LED_1 
+set_location_assignment PIN_19 -to LED_2
+set_location_assignment PIN_18 -to LED_3
+# 3.3v  P1 pin9 -> pin15 (20)
+# GND  P1 pin10 -> pin17 (20)
