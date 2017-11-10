@@ -22,7 +22,7 @@ module test;
 	wire [7:0]     led;
 	reg [7:0] read_data = 8'hff;
 
-	device device0 (lpc_clk, lpc_rst, lpc_data, lpc_frame,uart_tx, uart_rx, led);
+	device device0 (lpc_clk, lpc_rst, lpc_data[0], lpc_data[1], lpc_data[2], lpc_data[3], lpc_frame,uart_tx, uart_rx, led);
 
 	task tick;
 	begin
@@ -165,7 +165,7 @@ module test;
 		$display ("Read: %x", read_value);
 	end
 	endtask
-
+`ifdef BAO
 	initial begin
 		$dumpfile("test.vcd");
 		$dumpvars;
@@ -178,18 +178,27 @@ module test;
 		lpc_rst  = 1;
 		repeat(10) tick;
 		lpc_write(16'h80, 8'h55);
-	end
-`ifdef BAO
+	end // initial begin
+`endif
+//`ifdef BAO
 	initial
 	begin
 		$dumpfile("test.vcd");
 		$dumpvars;
 
+		lpc_frame  = 1;
+		lpc_rst    = 1;
+		//addr_hit = 1;
+		repeat(10) tick;
+		lpc_rst  = 0;
+		repeat(10) tick;
+		lpc_rst  = 1;
+		repeat(10) tick;
 		// Initial state
-		lpc_read (16'h3fd, read_data);
-		if (read_data != 8'h60) $error("Port not ready or FIFO not empty initially");
-		lpc_read (16'h3f8, read_data);
-		if (read_data != 8'hff) $error("Data read from empty FIFO");
+//		lpc_read (16'h3fd, read_data);
+//		if (read_data != 8'h60) $error("Port not ready or FIFO not empty initially");
+//		lpc_read (16'h3f8, read_data);
+//		if (read_data != 8'hff) $error("Data read from empty FIFO");
 
 		// Receive data on the UART
 		uart_write (8'h5a);
@@ -280,5 +289,5 @@ module test;
 
 		$finish;
 	end // initial begin
-`endif
+//`endif
 endmodule

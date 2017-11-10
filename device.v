@@ -6,32 +6,36 @@
 module device (
 	LPC_CLK,
 	LPC_RST_n,
-//	LPC_D0,
-//	LPC_D1,
-//	LPC_D2,
-//	LPC_D3,
-	LPC_AD,
+	LPC_D0,
+	LPC_D1,
+	LPC_D2,
+	LPC_D3,
+//	LPC_AD,
 	LPC_FRAME,
 
 	UART_TX,
 	UART_RX,
-	SEG7_LED		// 主板前面板LED控制 低电平灯亮
+	SEG7_LED,		// 主板前面板LED控制 低电平灯亮
+	SEG7_LED_CS,
 
 //	LED_0, LED_1, LED_2, LED_3,
+	LED
 );
 	input LPC_CLK;
 	input LPC_RST_n;
-//	inout LPC_D0;
-//	inout LPC_D1;
-//	inout LPC_D2;
-//	inout LPC_D3;
-	inout wire [3:0] LPC_AD;    		// Address/Data Bus
+	inout LPC_D0;
+	inout LPC_D1;
+	inout LPC_D2;
+	inout LPC_D3;
+//	inout wire [3:0] LPC_AD;    		// Address/Data Bus
 	input LPC_FRAME;
 
 	output UART_TX;
 	input UART_RX;
 	output wire [7:0] SEG7_LED;
+	output wire [1:0] SEG7_LED_CS;
 
+	output [3:0] LED;
 //	output LED_0, LED_1, LED_2, LED_3;
 
 	wire [7:0] tx_data;
@@ -47,7 +51,43 @@ module device (
 	wire [7:0] lpc_din;
 	wire [7:0] lpc_dout;
 
-	wire [7:0] postcode;
+	wire [7:0] postcode; //= 8'h55;
+
+	parameter	seg0 = 7'h3f,
+				seg1 = 7'h06,
+				seg2 = 7'h5b,
+				seg3 = 7'h4f,
+				seg4 = 7'h66,
+				seg5 = 7'h6d,
+				seg6 = 7'h7d,
+				seg7 = 7'h07,
+				seg8 = 7'h7f,
+				seg9 = 7'h6f,
+				sega = 7'h77,
+				segb = 7'h7c,
+				segc = 7'h39,
+				segd = 7'h5e,
+				sege = 7'h79,
+				segf = 7'h71;
+	assign SEG7_LED[6:0] = 
+						(postcode[7:4] == 4'h0) ? seg0 :
+						(postcode[7:4] == 4'h1) ? seg1 :
+						(postcode[7:4] == 4'h2) ? seg2 :
+						(postcode[7:4] == 4'h3) ? seg3 :
+						(postcode[7:4] == 4'h4) ? seg4 :
+						(postcode[7:4] == 4'h5) ? seg5 :
+						(postcode[7:4] == 4'h6) ? seg6 :
+						(postcode[7:4] == 4'h7) ? seg7 :
+						(postcode[7:4] == 4'h8) ? seg8 :
+						(postcode[7:4] == 4'h9) ? seg9 :
+						(postcode[7:4] == 4'ha) ? sega :
+						(postcode[7:4] == 4'hb) ? segb :
+						(postcode[7:4] == 4'hc) ? segc :
+						(postcode[7:4] == 4'hd) ? segd :
+						(postcode[7:4] == 4'he) ? sege :
+						(postcode[7:4] == 4'hf) ? segf : 0;
+
+	assign SEG7_LED_CS[1:0] = 2'b00;
 	//always #15 sim_clk = ~sim_clk;
 	assign addr_hit =
 //	`ifdef POST_CODE
@@ -55,15 +95,16 @@ module device (
 //	`endif
 //	`ifdef COM0_UART
 			 //((lpc_addr >= `LPC_COM0_ADD) && (lpc_addr <= (`LPC_COM0_ADD+7))) ||
-			 (lpc_reg[0] && (lpc_addr >= `LPC_COM0_ADD) && (lpc_addr <= (`LPC_COM0_ADD+7)));// ||
+			 (lpc_addr >= `LPC_COM0_ADD) && (lpc_addr <= (`LPC_COM0_ADD+7));// ||
 //	`endif
 
+	assign LED[3:0] = postcode[3:0];
 	LPC_Peri LPC_Peri_0(
 		// LPC Interface
 		.lclk(LPC_CLK),					// Clock
 		.lreset_n(LPC_RST_n),			// Reset - Active Low (Same as PCI Reset)
 		.lframe_n(LPC_FRAME),			// Frame - Active Low
-		.lad_in(LPC_AD),				// Address/Data Bus
+		.lad_in({LPC_D3, LPC_D2, LPC_D1, LPC_D0}),				// Address/Data Bus
 
 //	.lpc_data_out(),				// 用于测试
 //

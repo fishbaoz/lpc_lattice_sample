@@ -57,7 +57,7 @@
 // Revision 1.5  2008-2-04            Joseph Hsin: Added addr_hit logic so that the design will response to the LPC host only the registers are accessed.
 // --------------------------------------------------------------------
 
-`timescale 1 ns / 1 ps
+//`timescale 1 ns / 1 ps
 
 module LPC_Peri (
 
@@ -119,8 +119,10 @@ module LPC_Peri (
 // --------------------------------------------------------------------------
 
 always @ (posedge lclk or negedge lreset_n) begin
+   $display("current_state=%x ->", current_state);
    if (~lreset_n) current_state <= `IDLE;
    else current_state <= next_state;
+   $display("current_state=%x, addr_hit=%x\n", current_state, addr_hit);
 end
 
 assign next_state = (lreset_n == 1'b0) ? `IDLE :
@@ -200,6 +202,7 @@ assign lpc_addr[ 3: 0] = (rd_addr_en[0] == 1'b1) ? lad_in : lpc_addr[ 3: 0];
 //Register Data In
 
 always @ (posedge lclk) begin
+   $display("wr_data_en=%x, state=%x\n", wr_data_en, current_state);
    if (wr_data_en[0]) lpc_data_in[3:0] <= lad_in;
    if (wr_data_en[1]) lpc_data_in[7:4] <= lad_in;
    //LAD = (current_state == `IO_WR_SYNC) ? 4'b0000 : 4'bzzzz; // On the beginning of write sync, it should be assigned to 'sync success' (0)

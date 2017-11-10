@@ -36,9 +36,9 @@ set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 5
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR "-1"
 set_global_assignment -name POWER_EXT_SUPPLY_VOLTAGE_TO_REGULATOR 3.3V
 set_global_assignment -name VERILOG_FILE device.v
-set_global_assignment -name VERILOG_FILE uart_tx.v
-set_global_assignment -name VERILOG_FILE uart_rx.v
-set_global_assignment -name VERILOG_FILE lpc.v
+set_global_assignment -name VERILOG_FILE lpc_com.v
+set_global_assignment -name VERILOG_FILE LPC_Peri.v
+set_global_assignment -name VERILOG_FILE lpc_postcode.v
 set_global_assignment -name AUTO_RESTART_CONFIGURATION OFF
 set_global_assignment -name ENABLE_DEVICE_WIDE_RESET ON
 set_global_assignment -name ENABLE_OCT_DONE OFF
@@ -59,9 +59,21 @@ set_location_assignment PIN_43 -to LPC_CLK # P3 pin17 -> pin1 (20)
 set_location_assignment PIN_33 -to LPC_FRAME # P3 pin7 -> pin3 (20)
 set_location_assignment PIN_78 -to UART_TX
 set_location_assignment PIN_77 -to UART_RX
-set_location_assignment PIN_21 -to LED_0 
-set_location_assignment PIN_20 -to LED_1 
-set_location_assignment PIN_19 -to LED_2
-set_location_assignment PIN_18 -to LED_3
+
+set_location_assignment PIN_4 -to SEG7_LED[6] 
+set_location_assignment PIN_3 -to SEG7_LED[5] 
+set_location_assignment PIN_5 -to SEG7_LED[4] 
+set_location_assignment PIN_6 -to SEG7_LED[3] 
+set_location_assignment PIN_7 -to SEG7_LED[2] 
+set_location_assignment PIN_1 -to SEG7_LED[1] 
+set_location_assignment PIN_2 -to SEG7_LED[0] 
+
+#set_location_assignment PIN_99 -to SEG7_LED_CS[1] 
+set_location_assignment PIN_100 -to SEG7_LED_CS[0] 
+
+set_location_assignment PIN_21 -to LED[0] 
+set_location_assignment PIN_20 -to LED[1] 
+set_location_assignment PIN_19 -to LED[2]
+set_location_assignment PIN_18 -to LED[3]
 # 3.3v  P1 pin9 -> pin15 (20)
 # GND  P1 pin10 -> pin17 (20)

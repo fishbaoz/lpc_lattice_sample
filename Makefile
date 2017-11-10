@@ -2,6 +2,7 @@ PROJECT_FILE=device.qsf
 #SOURCES=$(shell awk '/^set_global_assignment -name VERILOG_FILE/ {print $$NF}' $(PROJECT_FILE))
 #TOPLEVEL=$(shell awk '/^set_global_assignment -name TOP_LEVEL_ENTITY/ {print $$NF}' $(PROJECT_FILE))
 
+TOPLEVEL=device
 TESTBENCH=$(wildcard *tb.v)
 
 SOURCES = LPC_Peri.v device.v lpc_postcode.v lpc_com.v
