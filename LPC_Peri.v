@@ -122,7 +122,7 @@ always @ (posedge lclk or negedge lreset_n) begin
    $display("current_state=%x ->", current_state);
    if (~lreset_n) current_state <= `IDLE;
    else current_state <= next_state;
-   $display("current_state=%x, addr_hit=%x\n", current_state, addr_hit);
+   $display("current_state=%x, addr_hit=%x, lpc_addr=%x\n", current_state, addr_hit, lpc_addr);
 end
 
 assign next_state = (lreset_n == 1'b0) ? `IDLE :

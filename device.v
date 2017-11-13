@@ -89,14 +89,15 @@ module device (
 
 	assign SEG7_LED_CS[1:0] = 2'b00;
 	//always #15 sim_clk = ~sim_clk;
-	assign addr_hit =
+	assign addr_hit = 
 //	`ifdef POST_CODE
 			 (lpc_addr == `LPC_POST_ADD) ||
 //	`endif
 //	`ifdef COM0_UART
 			 //((lpc_addr >= `LPC_COM0_ADD) && (lpc_addr <= (`LPC_COM0_ADD+7))) ||
-			 (lpc_addr >= `LPC_COM0_ADD) && (lpc_addr <= (`LPC_COM0_ADD+7));// ||
+//			 (lpc_addr >= `LPC_COM0_ADD) && (lpc_addr <= (`LPC_COM0_ADD+7)) ||
 //	`endif
+			  0;
 
 	assign LED[3:0] = postcode[3:0];
 	LPC_Peri LPC_Peri_0(
@@ -119,6 +120,7 @@ module device (
 //	//.serirq({3'b000,com0_irq,4'b0000})							// 中断输入 高电平有效
 //	.serirq({3'b000,com0_irq,4'b000})
 );
+	//lpc_decode lpc_decode_0 (LPC_CLK, LPC_RST, LPC_FRAME, lpc_dout, {LPC_D3, LPC_D2, LPC_D1, LPC_D0});
 
 //	lpc lpc0 (LPC_CLK, LPC_RST, { LPC_D3, LPC_D2, LPC_D1, LPC_D0 }, LPC_FRAME, tx_data, tx_data_valid, rx_data, rx_data_valid, tx_busy);
 //	uart_tx uart_tx0 (LPC_CLK, tx_data, tx_data_valid, UART_TX, tx_busy /*, led_value */);
