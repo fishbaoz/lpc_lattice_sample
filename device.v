@@ -32,7 +32,7 @@ module device (
 
 	output UART_TX;
 	input UART_RX;
-	output wire [7:0] SEG7_LED;
+	output wire [6:0] SEG7_LED;
 	output wire [1:0] SEG7_LED_CS;
 
 	output [3:0] LED;

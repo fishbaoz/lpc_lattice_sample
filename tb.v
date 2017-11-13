@@ -19,10 +19,12 @@ module test;
 	wire uart_tx;
 	reg lpc_rst=1;
 
-	wire [7:0]     led;
+	wire [3:0]     led;
+	wire [6:0] 	       seg7_led;
+	wire [1:0] 	       seg7_led_cs;
 	reg [7:0] read_data = 8'hff;
 
-	device device0 (lpc_clk, lpc_rst, lpc_data[0], lpc_data[1], lpc_data[2], lpc_data[3], lpc_frame,uart_tx, uart_rx, led);
+	device device0 (lpc_clk, lpc_rst, lpc_data[0], lpc_data[1], lpc_data[2], lpc_data[3], lpc_frame,uart_tx, uart_rx, seg7_led, seg7_led_cs, led);
 
 	task tick;
 	begin
